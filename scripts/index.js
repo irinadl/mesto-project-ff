@@ -24,7 +24,7 @@ function createCard(data, onDelete) {
 // @todo: Функция удаления карточки
 
 function handleDeleteCard(evt) {
-  evt.target.parentElement.remove();
+  evt.target.closest('li').remove();  
 }
 
 // @todo: Вывести карточки на страницу
