@@ -15,13 +15,13 @@ export function createCard(data, user, onDelete, likeCard, openImgPopup) {
     const cardID = data._id;
  
 
-   if (user._id !== data.owner._id) {
+   if (user !== data.owner._id) {
     deleteButton.classList.add('card__delete-button_disabled');
    };
 
-   if (data.likes.some((like) => like._id === user._id)) {cardLikeButton.classList.add('card__like-button_is-active')};
-    
-
+   if (data.likes.some((like) => like._id === user)) {cardLikeButton.classList.add('card__like-button_is-active');
+   };
+  
     deleteButton.addEventListener("click", (evt) => {onDelete(cardElement, cardID)});
     cardLikeButton.addEventListener('click', (evt) => {likeCard(evt, cardID, likeCounter)});
     
