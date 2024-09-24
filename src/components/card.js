@@ -5,10 +5,11 @@ export function createCard(data, user, onDelete, likeCard, openImgPopup) {
     const cardElement = cardTemplate.cloneNode(true);
     const deleteButton = cardElement.querySelector(".card__delete-button");
     const cardLikeButton = cardElement.querySelector('.card__like-button');
+    const cardImage = cardElement.querySelector(".card__image");
     const likeCounter = cardElement.querySelector('.card__like-counter');
       
-    cardElement.querySelector(".card__image").src = data.link;
-    cardElement.querySelector(".card__image").alt = data.name;
+    cardImage.src = data.link;
+    cardImage.alt = data.name;
     cardElement.querySelector(".card__title").textContent = data.name;
     likeCounter.textContent = data.likes.length;
     const cardID = data._id;
@@ -21,19 +22,19 @@ export function createCard(data, user, onDelete, likeCard, openImgPopup) {
    if (data.likes.some((like) => like._id === user._id)) {cardLikeButton.classList.add('card__like-button_is-active')};
     
 
-    deleteButton.addEventListener("click", (evt) => {onDelete(evt, cardID)});
+    deleteButton.addEventListener("click", (evt) => {onDelete(cardElement, cardID)});
     cardLikeButton.addEventListener('click', (evt) => {likeCard(evt, cardID, likeCounter)});
     
-    cardElement.querySelector(".card__image").addEventListener('click', () => {openImgPopup(data)});
+    cardImage.addEventListener('click', () => {openImgPopup(data)});
     
      return cardElement;
   }
 
-  export function handleDeleteCard(evt, cardID) {
+  export function handleDeleteCard(cardElement, cardID) {
     
    removeCardData(cardID)
     .then(() => {
-    evt.target.closest('.places__item').remove();}
+    cardElement.remove();}    
     )
     .catch((err) => {
       console.log(err); 
