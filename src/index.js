@@ -75,11 +75,13 @@ function handleCreateCard(evt) {
   };
   renderPopupBtnLoading(true, popupAddCard);
   postNewCardData(newCard)
-  .then((data) => {placeList.prepend(createCard(data, data.owner, handleDeleteCard, likeCard, openImgPopup)) })
+  .then((data) => {
+    placeList.prepend(createCard(data, data.owner, handleDeleteCard, likeCard, openImgPopup));
+    closePopup(popupAddCard);})
   .catch((err) => {
     console.log(err); 
   })
-  .finally(() => {closePopup(popupAddCard); renderPopupBtnLoading(false, popupAddCard)}); 
+  .finally(() => {renderPopupBtnLoading(false, popupAddCard)}); 
 }
 
 //Функция индикация загрузки контента
@@ -120,11 +122,12 @@ function submitEditProdileForm(evt) {
   .then((data) => {
     profileTitle.textContent = data.name;
     profileDescription.textContent = data.about;
+    closePopup(popupEditProfile);
   })
   .catch((err) => {
     console.log(err); 
   })
-  .finally(() => {closePopup(popupEditProfile); renderPopupBtnLoading(false,  popupEditProfile)});  
+  .finally(() => {renderPopupBtnLoading(false,  popupEditProfile)});  
 }   
 
 //Функция редактирования аватара
@@ -133,11 +136,13 @@ function submitNewAvatar(evt) {
   evt.preventDefault();
   renderPopupBtnLoading(true, popupAvatarEdit);  
   postNewAvatar(editAvatarForm.elements.link.value)
-  .then((data) => {profileAvatar.style.backgroundImage = `url("${data.avatar}")`})
-  .catch((err) => {
+  .then((data) => {
+    profileAvatar.style.backgroundImage = `url("${data.avatar}")`;
+    closePopup(popupAvatarEdit);})
+  .catch((err) => { 
     console.log(err); 
   })
-  .finally(() => {closePopup(popupAvatarEdit); renderPopupBtnLoading(false, popupAvatarEdit)});
+  .finally(() => {renderPopupBtnLoading(false, popupAvatarEdit)});
   }
 
 //Ручное создание  карточки 
